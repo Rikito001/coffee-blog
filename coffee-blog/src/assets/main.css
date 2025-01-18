@@ -1,0 +1,160 @@
+@import './base.css';
+
+/* src/assets/css/main.css */
+
+/* Variables */
+:root {
+  --coffee-dark: #3E2723;
+  --coffee-medium: #795548;
+  --coffee-light: #D7CCC8;
+  --cream: #EFEBE9;
+  --accent: #8D6E63;
+}
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--cream);
+  color: var(--coffee-dark);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: var(--coffee-dark);
+  padding: 1rem 0;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  color: var(--cream);
+  font-size: 2rem;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: var(--coffee-light);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: var(--cream);
+}
+
+/* Footer Styles */
+.footer {
+  background-color: var(--coffee-dark);
+  color: var(--coffee-light);
+  padding: 2rem 0;
+  margin-top: 4rem;
+  text-align: center;
+}
+
+/* Home Page Styles */
+.hero {
+  background-color: var(--coffee-medium);
+  color: var(--cream);
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.featured-posts {
+  padding: 4rem 0;
+}
+
+.featured-posts h2 {
+  margin-bottom: 2rem;
+  color: var(--coffee-medium);
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.post-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.post-card h3 {
+  color: var(--coffee-medium);
+  margin-bottom: 1rem;
+}
+
+/* Brewing Guide Page Styles */
+.page-header {
+  background-color: var(--coffee-medium);
+  color: var(--cream);
+  padding: 2rem 0;
+  text-align: center;
+}
+
+.brewing-methods {
+  padding: 4rem 0;
+}
+
+.brewing-methods h2 {
+  margin-bottom: 2rem;
+  color: var(--coffee-medium);
+}
+
+.methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.method-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.method-card h3 {
+  color: var(--coffee-medium);
+  margin-bottom: 1rem;
+}
+
+.method-details {
+  margin-top: 1rem;
+  list-style: none;
+  color: var(--accent);
+}
+
+.method-details li {
+  margin-bottom: 0.5rem;
+}
