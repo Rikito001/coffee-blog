@@ -1,8 +1,4 @@
-@import './base.css';
-
-/* src/assets/css/main.css */
-
-/* Variables */
+/* Base Colors */
 :root {
   --coffee-dark: #3E2723;
   --coffee-medium: #795548;
@@ -11,7 +7,7 @@
   --accent: #8D6E63;
 }
 
-/* Global Styles */
+/* Global */
 * {
   margin: 0;
   padding: 0;
@@ -31,7 +27,7 @@ body {
   padding: 0 2rem;
 }
 
-/* Navbar Styles */
+/* Navbar */
 .navbar {
   background-color: var(--coffee-dark);
   padding: 1rem 0;
@@ -65,7 +61,7 @@ body {
   color: var(--cream);
 }
 
-/* Footer Styles */
+/* Footer */
 .footer {
   background-color: var(--coffee-dark);
   color: var(--coffee-light);
@@ -74,7 +70,7 @@ body {
   text-align: center;
 }
 
-/* Home Page Styles */
+/* Home Page */
 .hero {
   background-color: var(--coffee-medium);
   color: var(--cream);
@@ -114,7 +110,7 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Brewing Guide Page Styles */
+/* Brewing Guide */
 .page-header {
   background-color: var(--coffee-medium);
   color: var(--cream);
@@ -157,4 +153,90 @@ body {
 
 .method-details li {
   margin-bottom: 0.5rem;
+}
+
+
+
+/* Add/modify these styles in your main.css */
+
+/* Card and Grid Styles */
+.posts-grid, .methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  position: relative; /* For absolute positioning of enlarged card */
+}
+
+.post-card, .method-card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+.post-card:hover, .method-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Enlarged Card Styles */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.enlarged-card {
+  background-color: white;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: var(--coffee-medium);
+  color: var(--cream);
+  border: none;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+  background-color: var(--coffee-dark);
+}
+
+/* Animation for the overlay and enlarged card */
+.overlay-enter-active,
+.overlay-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.overlay-enter-from,
+.overlay-leave-to {
+  opacity: 0;
 }
