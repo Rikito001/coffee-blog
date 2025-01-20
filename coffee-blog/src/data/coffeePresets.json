@@ -1,0 +1,44 @@
+{
+"americano": {
+"water": 60,
+"coffee": 40
+},
+"au_lait": {
+"coffee": 50,
+"milk": 50
+},
+"capuccino": {
+"coffee": 40,
+"steamed_milk": 30,
+"milk_foam": 30
+},
+"espresso": {
+"coffee": 40
+},
+"latte": {
+"coffee": 30,
+"steamed_milk": 50,
+"milk_foam": 20
+},
+"corretto": {
+"coffee": 75,
+"liquor": 25
+},
+"lungo": {
+"water": 70,
+"coffee": 30
+},
+"macchiato": {
+"coffee": 90,
+"milk_foam": 10
+},
+"mocha": {
+"coffee": 30,
+"chocolate": 20,
+"steamed_milk": 40,
+"whipped_cream": 10
+},
+"ristretto": {
+"coffee": 20
+}
+}

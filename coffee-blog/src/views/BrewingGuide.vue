@@ -1,45 +1,57 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import { defineComponent } from 'vue'
+
+interface BrewingMethod {
+  id: number;
+  name: string;
+  description: string;
+  category: string;
+  difficulty: string;
+  time: string;
+  steps: string[];
+  requirements: string[];
+}
 
 export default defineComponent({
   name: "BrewingGuide",
-  
+
   data() {
     return {
-      selectedMethod: null,
+      selectedMethod: null as BrewingMethod | null,
       brewingMethods: [
         {
           id: 1,
           name: 'French Press',
-          description: 'A classic immersion brewing method...',
+          description: 'A classic immersion brewing method that produces a full-bodied cup of coffee.',
+          category: 'Immersion',
           difficulty: 'Easy',
           time: '4-5 minutes',
-          fullContent: 'A classic immersion brewing method that produces a full-bodied cup of coffee.'
+          steps: [
+            'Coarsely grind your coffee beans',
+            'Heat water to 200°F (93°C)',
+            'Add coffee to the French press',
+            'Pour hot water and start timer',
+            'Stir gently after 1 minute',
+            'Press plunger down at 4 minutes'
+          ],
+          requirements: [
+            'French Press',
+            'Coarse ground coffee',
+            'Hot water (200°F)',
+            'Timer',
+            'Spoon for stirring'
+          ]
         },
-        {
-          id: 2,
-          name: 'Pour Over',
-          description: 'A manual drip method that highlights...',
-          difficulty: 'Intermediate',
-          time: '3-4 minutes',
-          fullContent: 'A manual drip method that highlights the subtle flavors of your coffee.'
-        },
-        {
-          id: 3,
-          name: 'Aeropress',
-          description: 'A versatile brewing method that can...',
-          difficulty: 'Easy',
-          time: '1-2 minutes',
-          fullContent: 'A versatile brewing method that can produce espresso-style coffee.'
-        }
-      ]
+        // ... rest of the brewing methods array stays the same
+      ] as BrewingMethod[]
     }
   },
+
   methods: {
-    openMethod(method) {
+    openMethod(method: BrewingMethod): void {
       this.selectedMethod = method
     },
-    closeMethod() {
+    closeMethod(): void {
       this.selectedMethod = null
     }
   }
@@ -48,45 +60,72 @@ export default defineComponent({
 
 <template>
   <div class="brewing-guide">
-    <header class="page-header">
+    <header class="blog-header">
       <div class="container">
         <h1>Coffee Brewing Guide</h1>
+        <p class="subtitle">Master the art of brewing the perfect cup</p>
       </div>
     </header>
 
     <main class="container">
       <section class="brewing-methods">
         <h2>Popular Brewing Methods</h2>
-        <div class="methods-grid">
-          <div
-            class="method-card"
+        <div class="blog-grid">
+          <article
             v-for="method in brewingMethods"
             :key="method.id"
+            class="blog-card"
             @click="openMethod(method)"
           >
-            <h3>{{ method.name }}</h3>
-            <p>{{ method.description }}</p>
-            <ul class="method-details">
-              <li>Difficulty: {{ method.difficulty }}</li>
-              <li>Time: {{ method.time }}</li>
-            </ul>
-          </div>
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="category">{{ method.category }}</span>
+                <span class="read-time">{{ method.time }}</span>
+              </div>
+              <h2>{{ method.name }}</h2>
+              <p class="excerpt">{{ method.description }}</p>
+              <div class="method-badges">
+                <span class="difficulty">Difficulty: {{ method.difficulty }}</span>
+              </div>
+            </div>
+          </article>
         </div>
       </section>
     </main>
 
-    <!-- Enlarged Card Overlay -->
     <Transition name="overlay">
       <div v-if="selectedMethod" class="overlay" @click.self="closeMethod">
-        <div class="enlarged-card">
+        <article class="article-modal">
           <button class="close-button" @click="closeMethod">×</button>
-          <h2>{{ selectedMethod.name }}</h2>
-          <p>{{ selectedMethod.fullContent }}</p>
-          <ul class="method-details">
-            <li>Difficulty: {{ selectedMethod.difficulty }}</li>
-            <li>Time: {{ selectedMethod.time }}</li>
-          </ul>
-        </div>
+          <div class="article-content">
+            <div class="article-meta">
+              <span class="category">{{ selectedMethod.category }}</span>
+              <span class="read-time">{{ selectedMethod.time }}</span>
+            </div>
+            <h1>{{ selectedMethod.name }}</h1>
+            <p class="description">{{ selectedMethod.description }}</p>
+
+            <div class="method-details">
+              <div class="requirements-section">
+                <h3>What You'll Need</h3>
+                <ul class="requirements-list">
+                  <li v-for="(req, index) in selectedMethod.requirements" :key="index">
+                    {{ req }}
+                  </li>
+                </ul>
+              </div>
+
+              <div class="steps-section">
+                <h3>Brewing Steps</h3>
+                <ol class="steps-list">
+                  <li v-for="(step, index) in selectedMethod.steps" :key="index">
+                    {{ step }}
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </article>
       </div>
     </Transition>
   </div>

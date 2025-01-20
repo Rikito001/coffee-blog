@@ -1,13 +1,52 @@
-/* Base Colors */
+/* Color Variables */
 :root {
-  --coffee-dark: #3E2723;
-  --coffee-medium: #795548;
-  --coffee-light: #D7CCC8;
-  --cream: #EFEBE9;
-  --accent: #8D6E63;
+  --coffee-dark: #2C1810;
+  --coffee-medium: #8B4513;
+  --coffee-light: #D2691E;
+  --cream: #FDF5E6;
+  --accent: #C17817;
+  --text-dark: #2C1810;
+  --text-light: #FDF5E6;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --gradient-dark: linear-gradient(to right, #2C1810, #8B4513);
+  --gradient-light: linear-gradient(to right, #D2691E, #C17817);
+
+  /* Coffee Builder Variables */
+  --main-bg-color: #d6b9a4;
+  --cup-color: #474747;
+  --cup-width: 30vw;
+  --cup-height: 24vw;
+  --cup-handle-width: 5vw;
+  --cup-handle-height: calc(2 * var(--cup-handle-width));
+  --cup-border-width: 2vw;
+  --cup-inside-width: calc(var(--cup-width) - var(--cup-border-width));
+  --cup-inside-height: calc(var(--cup-height) - var(--cup-border-width));
+  --border-width: 1vw;
+  --main-border: var(--border-width) solid var(--cup-color);
+  --plate-width: 25vw;
+  --plate-height: 2vw;
+  --coffee-bottom: 80%;
+  --water-bottom: 0;
+  --milk-bottom: 0;
+  --liquor-bottom: 0;
+  --whipped_cream-bottom: 0;
+  --steamed_milk-bottom: 0;
+  --milk_foam-bottom: 0;
+  --chocolate-bottom: 0;
+  --coffee-color: #3c302f;
+  --water-color: #b1dce2;
+  --milk-color: #f0ebe5;
+  --liquor-color: #fc8626;
+  --whipped_cream-color: #fceecb;
+  --milk_foam-color: #fceecb;
+  --steamed_milk-color: #ffd7b3;
+  --chocolate-color: #391e09;
+
 }
 
-/* Global */
+/* Global Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -15,10 +54,10 @@
 }
 
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'Poppins', 'Helvetica Neue', Arial, sans-serif;
   background-color: var(--cream);
-  color: var(--coffee-dark);
-  line-height: 1.6;
+  color: var(--text-dark);
+  line-height: 1.8;
 }
 
 .container {
@@ -29,8 +68,12 @@ body {
 
 /* Navbar */
 .navbar {
-  background-color: var(--coffee-dark);
-  padding: 1rem 0;
+  background: var(--gradient-dark);
+  padding: 1.2rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--shadow-md);
 }
 
 .nav-container {
@@ -40,197 +83,380 @@ body {
 }
 
 .logo {
-  color: var(--cream);
-  font-size: 2rem;
-  font-weight: bold;
+  color: var(--text-light);
+  font-size: 2.2rem;
+  font-weight: 700;
   text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .nav-links {
   display: flex;
   gap: 2rem;
+  align-items: center;
 }
 
 .nav-link {
-  color: var(--coffee-light);
+  color: var(--text-light);
   text-decoration: none;
-  transition: color 0.3s ease;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: all 0.3s ease;
 }
 
 .nav-link:hover {
-  color: var(--cream);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* Footer */
 .footer {
-  background-color: var(--coffee-dark);
-  color: var(--coffee-light);
-  padding: 2rem 0;
-  margin-top: 4rem;
+  background: var(--gradient-dark);
+  color: var(--text-light);
+  padding: 3rem 0;
+  margin-top: 6rem;
   text-align: center;
 }
 
-/* Home Page */
-.hero {
-  background-color: var(--coffee-medium);
-  color: var(--cream);
-  padding: 4rem 0;
+/* Headers and Common Sections */
+.blog-header, .culture-header {
+  background: var(--gradient-light);
+  color: var(--text-light);
+  padding: 8rem 0;
   text-align: center;
-}
-
-.hero h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
-.featured-posts {
-  padding: 4rem 0;
-}
-
-.featured-posts h2 {
-  margin-bottom: 2rem;
-  color: var(--coffee-medium);
-}
-
-.posts-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.post-card {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.post-card h3 {
-  color: var(--coffee-medium);
-  margin-bottom: 1rem;
-}
-
-/* Brewing Guide */
-.page-header {
-  background-color: var(--coffee-medium);
-  color: var(--cream);
-  padding: 2rem 0;
-  text-align: center;
-}
-
-.brewing-methods {
-  padding: 4rem 0;
-}
-
-.brewing-methods h2 {
-  margin-bottom: 2rem;
-  color: var(--coffee-medium);
-}
-
-.methods-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.method-card {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.method-card h3 {
-  color: var(--coffee-medium);
-  margin-bottom: 1rem;
-}
-
-.method-details {
-  margin-top: 1rem;
-  list-style: none;
-  color: var(--accent);
-}
-
-.method-details li {
-  margin-bottom: 0.5rem;
-}
-
-
-
-/* Add/modify these styles in your main.css */
-
-/* Card and Grid Styles */
-.posts-grid, .methods-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  position: relative; /* For absolute positioning of enlarged card */
-}
-
-.post-card, .method-card {
-  background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  cursor: pointer;
+  margin-bottom: 4rem;
   position: relative;
-  z-index: 1;
+  overflow: hidden;
 }
 
-.post-card:hover, .method-card:hover {
+.blog-header h1, .culture-header h1 {
+  font-size: 4.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  opacity: 0.9;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.4;
+}
+
+/* Grid Layouts */
+.blog-grid, .traditions-grid, .posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2.5rem;
+  padding: 2rem 0;
+}
+
+/* Cards */
+.blog-card, .post-card, .tradition-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.blog-card:hover, .post-card:hover, .tradition-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-lg);
 }
 
-/* Enlarged Card Styles */
+.blog-image, .tradition-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.blog-content, .tradition-content {
+  padding: 1.5rem;
+}
+
+.blog-meta, .tradition-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.category, .region-tag {
+  background: var(--coffee-light);
+  color: var(--text-light);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.read-time {
+  color: var(--coffee-medium);
+  font-size: 0.875rem;
+}
+
+.blog-content h2, .tradition-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--coffee-dark);
+  line-height: 1.4;
+}
+
+.excerpt, .tradition-desc {
+  color: #666;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+/* Modal Styles */
 .overlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  padding: 2rem;
 }
 
-.enlarged-card {
-  background-color: white;
-  padding: 3rem;
+.article-modal, .tradition-modal, .enlarged-card {
+  background: white;
   border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  width: 90%;
-  max-width: 800px;
+  width: 100%;
+  max-width: 900px;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
+}
+
+.full-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+}
+
+.article-content {
+  padding: 2rem;
+}
+
+.article-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.article-content h1 {
+  font-size: 2rem;
+  color: var(--coffee-dark);
+  margin-bottom: 1rem;
+}
+
+.author-info {
+  display: flex;
+  gap: 1rem;
+  color: var(--coffee-medium);
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+}
+
+.article-body {
+  line-height: 1.8;
+  color: var(--text-dark);
 }
 
 .close-button {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background-color: var(--coffee-medium);
-  color: var(--cream);
+  background: var(--coffee-dark);
+  color: white;
   border: none;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
+  font-size: 1.5rem;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
+  z-index: 10;
 }
 
 .close-button:hover {
-  background-color: var(--coffee-dark);
+  background: var(--coffee-medium);
 }
 
-/* Animation for the overlay and enlarged card */
+/* Auth Components */
+.auth-modal {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: var(--shadow-lg);
+}
+
+.login-button {
+  background: var(--coffee-light);
+  color: var(--text-light);
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background: var(--coffee-medium);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  color: var(--coffee-dark);
+  font-weight: 500;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: var(--coffee-medium);
+  outline: none;
+}
+
+.submit-button {
+  background: var(--coffee-medium);
+  color: var(--text-light);
+  border: none;
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background: var(--coffee-dark);
+}
+
+.toggle-mode {
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  color: var(--coffee-medium);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.toggle-button:hover {
+  color: var(--coffee-dark);
+  text-decoration: underline;
+}
+
+/* Method-specific styles */
+.method-badges {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.difficulty {
+  color: var(--coffee-medium);
+  font-size: 0.9rem;
+}
+
+.method-details {
+  margin-top: 2rem;
+}
+
+.requirements-section,
+.steps-section {
+  background: var(--cream);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.requirements-section h3,
+.steps-section h3 {
+  color: var(--coffee-dark);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.requirements-list {
+  list-style: none;
+  padding: 0;
+}
+
+.requirements-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.requirements-list li:last-child {
+  border-bottom: none;
+}
+
+.steps-list {
+  padding-left: 1.2rem;
+}
+
+.steps-list li {
+  margin-bottom: 0.8rem;
+  line-height: 1.6;
+}
+
+.description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--coffee-dark);
+  margin-bottom: 2rem;
+}
+
+/* Post Info */
+.post-info {
+  display: flex;
+  justify-content: space-between;
+  color: var(--coffee-medium);
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 0.9rem;
+}
+
+/* Animations */
 .overlay-enter-active,
 .overlay-leave-active {
   transition: opacity 0.3s ease;
@@ -239,4 +465,73 @@ body {
 .overlay-enter-from,
 .overlay-leave-to {
   opacity: 0;
+}
+
+/* Error Messages */
+.error-message {
+  color: #dc3545;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+/* User Menu */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--text-light);
+}
+
+.logout-button {
+  background: var(--coffee-light);
+  color: var(--text-light);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background: var(--coffee-medium);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .blog-header h1, .culture-header h1 {
+    font-size: 3rem;
+  }
+
+  .subtitle {
+    font-size: 1.2rem;
+    padding: 0 1rem;
+  }
+
+  .blog-header, .culture-header {
+    padding: 6rem 0;
+  }
+
+  .nav-links {
+    gap: 1rem;
+  }
+
+  .blog-grid, .traditions-grid, .posts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .article-modal, .tradition-modal {
+    margin: 1rem;
+    max-height: calc(100vh - 2rem);
+  }
+
+  .full-image {
+    height: 250px;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
 }
