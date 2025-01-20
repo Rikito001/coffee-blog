@@ -1,0 +1,289 @@
+{
+  "brewingMethods": [
+    {
+      "id": 1,
+      "name": "French Press",
+      "description": "A classic immersion brewing method that produces a full-bodied cup of coffee.",
+      "category": "Immersion",
+      "difficulty": "Easy",
+      "time": "4-5 minutes",
+      "steps": [
+        "Coarsely grind your coffee beans",
+        "Heat water to 200°F (93°C)",
+        "Add coffee to the French press",
+        "Pour hot water and start timer",
+        "Stir gently after 1 minute",
+        "Press plunger down at 4 minutes"
+      ],
+      "requirements": [
+        "French Press",
+        "Coarse ground coffee",
+        "Hot water (200°F)",
+        "Timer",
+        "Spoon for stirring"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Pour Over",
+      "description": "A manual drip method that highlights the subtle flavors of your coffee.",
+      "category": "Filter",
+      "difficulty": "Intermediate",
+      "time": "3-4 minutes",
+      "steps": [
+        "Place filter and rinse with hot water",
+        "Add medium-fine ground coffee",
+        "Start timer and pour bloom water",
+        "Wait 30 seconds",
+        "Continue pouring in circular motion",
+        "Total brew time should be 3-4 minutes"
+      ],
+      "requirements": [
+        "Pour over dripper",
+        "Filter papers",
+        "Medium-fine ground coffee",
+        "Gooseneck kettle",
+        "Scale (recommended)",
+        "Timer"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Aeropress",
+      "description": "A versatile brewing method that can produce espresso-style coffee.",
+      "category": "Pressure",
+      "difficulty": "Easy",
+      "time": "1-2 minutes",
+      "steps": [
+        "Place filter and rinse",
+        "Add fine ground coffee",
+        "Add hot water and stir",
+        "Attach cap with filter",
+        "Wait 1 minute",
+        "Press down slowly"
+      ],
+      "requirements": [
+        "Aeropress",
+        "Aeropress filters",
+        "Fine ground coffee",
+        "Hot water (175-185°F)",
+        "Stirrer"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Moka Pot",
+      "description": "An Italian stovetop method that produces a rich, intense coffee similar to espresso.",
+      "category": "Pressure",
+      "difficulty": "Intermediate",
+      "time": "5-7 minutes",
+      "steps": [
+        "Fill bottom chamber with hot water",
+        "Insert funnel and add fine ground coffee",
+        "Screw on top chamber",
+        "Place on medium heat",
+        "Remove from heat when coffee starts flowing",
+        "Stop when you hear a gurgling sound"
+      ],
+      "requirements": [
+        "Moka Pot",
+        "Fine ground coffee",
+        "Hot water",
+        "Heat source",
+        "Coffee grinder",
+        "Heat-resistant handle"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Cold Brew",
+      "description": "A slow extraction method that produces a smooth, low-acid coffee concentrate.",
+      "category": "Immersion",
+      "difficulty": "Easy",
+      "time": "12-24 hours",
+      "steps": [
+        "Coarsely grind coffee beans",
+        "Combine coffee and cold water",
+        "Stir gently to ensure all grounds are wet",
+        "Cover and refrigerate for 12-24 hours",
+        "Strain through filter or cloth",
+        "Dilute concentrate with water or milk"
+      ],
+      "requirements": [
+        "Large container",
+        "Coarse ground coffee",
+        "Cold filtered water",
+        "Strainer or filter",
+        "Refrigerator",
+        "Storage bottle"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Siphon",
+      "description": "A theatrical brewing method that uses vacuum pressure to create a clean, complex cup.",
+      "category": "Vacuum",
+      "difficulty": "Advanced",
+      "time": "7-10 minutes",
+      "steps": [
+        "Fill bottom chamber with hot water",
+        "Insert filter and attach top chamber",
+        "Heat until water rises to top chamber",
+        "Add medium-fine ground coffee",
+        "Stir gently and wait 1 minute",
+        "Remove from heat and watch coffee drain"
+      ],
+      "requirements": [
+        "Siphon brewer",
+        "Cloth filter",
+        "Medium-fine ground coffee",
+        "Heat source",
+        "Thermometer",
+        "Bamboo paddle"
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Vietnamese Phin",
+      "description": "A traditional metal filter method that produces a strong, concentrated coffee.",
+      "category": "Filter",
+      "difficulty": "Easy",
+      "time": "4-5 minutes",
+      "steps": [
+        "Add coffee to phin filter",
+        "Tap gently to level grounds",
+        "Place filter press on top",
+        "Add small amount of hot water to bloom",
+        "Fill chamber with hot water",
+        "Wait for coffee to fully drip"
+      ],
+      "requirements": [
+        "Vietnamese phin filter",
+        "Medium-coarse ground coffee",
+        "Hot water (195-205°F)",
+        "Cup or glass",
+        "Sweetened condensed milk (optional)"
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Chemex",
+      "description": "An elegant pour-over method that produces a clean, bright cup with no bitterness.",
+      "category": "Filter",
+      "difficulty": "Intermediate",
+      "time": "4-5 minutes",
+      "steps": [
+        "Place and rinse Chemex filter",
+        "Add medium-coarse ground coffee",
+        "Pour water for initial bloom",
+        "Wait 30 seconds",
+        "Continue pouring in concentric circles",
+        "Let all water drain through"
+      ],
+      "requirements": [
+        "Chemex brewer",
+        "Chemex filters",
+        "Medium-coarse ground coffee",
+        "Gooseneck kettle",
+        "Scale",
+        "Timer"
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Turkish Coffee",
+      "description": "A centuries-old method that produces an intense, unfiltered coffee with a rich history.",
+      "category": "Traditional",
+      "difficulty": "Intermediate",
+      "time": "5-7 minutes",
+      "steps": [
+        "Grind coffee to super-fine powder",
+        "Add coffee and sugar to cezve/ibrik",
+        "Add cold water and stir",
+        "Heat slowly until foam forms",
+        "Remove from heat as it rises",
+        "Serve with foam on top"
+      ],
+      "requirements": [
+        "Cezve/Ibrik",
+        "Extra-fine ground coffee",
+        "Sugar (optional)",
+        "Heat source",
+        "Small coffee cups",
+        "Spoon"
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Espresso",
+      "description": "The foundation of many coffee drinks, producing a concentrated shot with rich crema.",
+      "category": "Pressure",
+      "difficulty": "Advanced",
+      "time": "25-30 seconds",
+      "steps": [
+        "Grind coffee to fine consistency",
+        "Dose correct amount into portafilter",
+        "Tamp with even pressure",
+        "Lock portafilter into machine",
+        "Start extraction",
+        "Stop at desired volume"
+      ],
+      "requirements": [
+        "Espresso machine",
+        "Portafilter",
+        "Fine ground coffee",
+        "Tamper",
+        "Scale (recommended)",
+        "Timer"
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Kalita Wave",
+      "description": "A flat-bottom pour-over method that provides consistent extraction and a clean cup.",
+      "category": "Filter",
+      "difficulty": "Intermediate",
+      "time": "3-4 minutes",
+      "steps": [
+        "Place and rinse filter",
+        "Add medium-fine ground coffee",
+        "Pour water for bloom",
+        "Wait 30 seconds",
+        "Pour in steady spirals",
+        "Maintain water level"
+      ],
+      "requirements": [
+        "Kalita Wave dripper",
+        "Wave filters",
+        "Medium-fine ground coffee",
+        "Gooseneck kettle",
+        "Scale",
+        "Server/Carafe"
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Clever Dripper",
+      "description": "A hybrid method combining immersion and filter brewing for a foolproof cup.",
+      "category": "Immersion/Filter",
+      "difficulty": "Easy",
+      "time": "4-5 minutes",
+      "steps": [
+        "Place filter and rinse",
+        "Add medium-coarse ground coffee",
+        "Pour hot water all at once",
+        "Steep for 2-3 minutes",
+        "Place over cup to drain",
+        "Wait until draining completes"
+      ],
+      "requirements": [
+        "Clever Dripper",
+        "Paper filters",
+        "Medium-coarse ground coffee",
+        "Hot water kettle",
+        "Timer",
+        "Cup or server"
+      ]
+    }
+  ]
+}

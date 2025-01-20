@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
+import blogData from '@/data/blog-data.json'
 
 interface BlogPost {
   id: number;
@@ -18,55 +19,71 @@ export default defineComponent({
   data() {
     return {
       selectedPost: null as BlogPost | null,
-      blogPosts: [
-        {
-          id: 1,
-          title: 'The Journey of Coffee: From Bean to Cup',
-          date: 'January 15, 2025',
-          author: 'Maria Santos',
-          excerpt: 'Discover the fascinating journey your coffee makes...',
-          category: 'Education',
-          readTime: '5 min read',
-          fullContent: `The journey of coffee from bean to cup is an intricate process that spans continents and requires careful attention at every step. It begins in the fertile soils of the coffee belt, where farmers carefully tend to their coffee plants, waiting for the perfect moment to harvest the bright red coffee cherries.
+      blogPosts: blogData.blogPosts as BlogPost[],
+      selectedCategories: [] as string[],
+      sortBy: 'dateDesc' // Default sort
+    }
+  },
 
-Each bean is handpicked at peak ripeness, then undergoes a careful processing method - whether it's the traditional washed process, the natural process, or the honey process. These methods significantly influence the final flavor of your cup.
+  computed: {
+    categories(): string[] {
+      return [...new Set(this.blogPosts.map(post => post.category))].sort()
+    },
 
-The beans then begin their global journey, shipped to roasters who apply their expertise to bring out the best flavors through careful roasting profiles. Finally, they reach your local café or home, ready to be ground and brewed into the perfect cup.`
-        },
-        {
-          id: 2,
-          title: 'Understanding Coffee Roast Profiles',
-          date: 'January 18, 2025',
-          author: 'James Chen',
-          excerpt: 'Learn how different roast levels affect your coffee...',
-          category: 'Roasting',
-          readTime: '4 min read',
-          fullContent: `Coffee roasting is both an art and a science. The roast level you choose can dramatically affect the flavor of your coffee. Light roasts preserve the bean's original character, highlighting bright, acidic notes and complex flavors. Medium roasts balance these characteristics with deeper, sweeter notes developed during the roasting process.
+    filteredPosts(): BlogPost[] {
+      let posts = this.blogPosts
 
-Dark roasts bring out bold, intense flavors with notes of chocolate and caramel, though they may mask some of the bean's original characteristics. Understanding these profiles helps you choose the perfect roast for your taste preferences.`
-        },
-        {
-          id: 3,
-          title: 'Sustainable Coffee: Making Better Choices',
-          date: 'January 20, 2025',
-          author: 'Emma Green',
-          excerpt: 'How your coffee choices impact the environment...',
-          category: 'Sustainability',
-          readTime: '6 min read',
-          fullContent: `Sustainable coffee production is becoming increasingly important as we face environmental challenges. From shade-grown coffee that preserves bird habitats to fair trade practices that ensure farmers receive fair compensation, every choice we make as consumers affects the coffee industry's sustainability.
+      // Apply category filter
+      if (this.selectedCategories.length > 0) {
+        posts = posts.filter(post =>
+          this.selectedCategories.includes(post.category)
+        )
+      }
 
-Learn about certification programs, ethical sourcing, and how your daily coffee routine can contribute to a more sustainable future for coffee farming communities and our planet.`
-        }
-      ] as BlogPost[]
+      // Apply sorting
+      return this.sortPosts([...posts])
     }
   },
 
   methods: {
+    toggleCategory(category: string): void {
+      const index = this.selectedCategories.indexOf(category)
+      if (index === -1) {
+        this.selectedCategories.push(category)
+      } else {
+        this.selectedCategories.splice(index, 1)
+      }
+    },
+
     openPost(post: BlogPost): void {
       this.selectedPost = post
     },
+
     closePost(): void {
       this.selectedPost = null
+    },
+
+    clearFilters(): void {
+      this.selectedCategories = []
+    },
+
+    sortPosts(posts: BlogPost[]): BlogPost[] {
+      switch (this.sortBy) {
+        case 'dateAsc':
+          return posts.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+        case 'dateDesc':
+          return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        case 'readTimeAsc':
+          return posts.sort((a, b) => parseInt(a.readTime) - parseInt(b.readTime))
+        case 'readTimeDesc':
+          return posts.sort((a, b) => parseInt(b.readTime) - parseInt(a.readTime))
+        default:
+          return posts
+      }
+    },
+
+    getReadTimeValue(readTime: string): number {
+      return parseInt(readTime)
     }
   }
 })
@@ -82,9 +99,50 @@ Learn about certification programs, ethical sourcing, and how your daily coffee 
     </header>
 
     <main class="container">
+      <div class="filter-window">
+        <div class="filter-header">
+          <h3>Filter & Sort Posts</h3>
+          <button
+            v-if="selectedCategories.length > 0"
+            class="clear-btn"
+            @click="clearFilters"
+          >
+            Clear Filters
+          </button>
+        </div>
+
+        <div class="filter-section">
+          <h4>Categories:</h4>
+          <div class="filter-buttons">
+            <button
+              v-for="category in categories"
+              :key="category"
+              :class="['filter-btn', { active: selectedCategories.includes(category) }]"
+              @click="toggleCategory(category)"
+            >
+              {{ category }}
+            </button>
+          </div>
+        </div>
+
+        <div class="sort-section">
+          <h4>Sort by:</h4>
+          <select v-model="sortBy" class="sort-select">
+            <option value="dateDesc">Newest First</option>
+            <option value="dateAsc">Oldest First</option>
+            <option value="readTimeAsc">Shortest Read Time</option>
+            <option value="readTimeDesc">Longest Read Time</option>
+          </select>
+        </div>
+
+        <div class="filter-footer">
+          Showing {{ filteredPosts.length }} of {{ blogPosts.length }} posts
+        </div>
+      </div>
+
       <section class="blog-grid">
         <article
-          v-for="post in blogPosts"
+          v-for="post in filteredPosts"
           :key="post.id"
           class="blog-card"
           @click="openPost(post)"
@@ -128,3 +186,151 @@ Learn about certification programs, ethical sourcing, and how your daily coffee 
     </Transition>
   </div>
 </template>
+
+<style scoped>
+/* Previous styles remain the same */
+
+.sort-section {
+  margin-bottom: 1.5rem;
+}
+
+.sort-section h4 {
+  color: var(--coffee-dark);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.sort-select {
+  width: 100%;
+  max-width: 200px;
+  padding: 0.5rem;
+  border: 2px solid var(--coffee-light);
+  border-radius: 8px;
+  background-color: white;
+  color: var(--coffee-dark);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sort-select:hover {
+  border-color: var(--coffee-medium);
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: var(--coffee-medium);
+  box-shadow: 0 0 0 2px rgba(139, 69, 19, 0.1);
+}
+
+@media (max-width: 768px) {
+  .sort-select {
+    max-width: 100%;
+  }
+}
+
+/* Rest of the previous styles remain the same */
+.filter-window {
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.filter-header h3 {
+  color: var(--coffee-dark);
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.filter-section {
+  margin-bottom: 1.5rem;
+}
+
+.filter-section h4 {
+  color: var(--coffee-dark);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.filter-btn {
+  background: none;
+  border: 2px solid var(--coffee-light);
+  color: var(--coffee-dark);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.filter-btn:hover {
+  border-color: var(--coffee-medium);
+}
+
+.filter-btn.active {
+  background: var(--coffee-light);
+  color: white;
+  border-color: var(--coffee-light);
+}
+
+.clear-btn {
+  background: none;
+  border: 1px solid var(--coffee-medium);
+  color: var(--coffee-medium);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.clear-btn:hover {
+  background: var(--coffee-medium);
+  color: white;
+}
+
+.filter-footer {
+  color: var(--coffee-medium);
+  font-size: 0.9rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  .filter-window {
+    padding: 1rem;
+  }
+
+  .filter-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .filter-btn {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .filter-section {
+    margin-bottom: 1rem;
+  }
+}
+</style>
