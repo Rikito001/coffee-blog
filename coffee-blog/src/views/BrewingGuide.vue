@@ -21,7 +21,10 @@ export default defineComponent({
       selectedMethod: null as BrewingMethod | null,
       brewingMethods: brewingData.brewingMethods as BrewingMethod[],
       selectedCategories: [] as string[],
-      selectedDifficulties: [] as string[]
+      selectedDifficulties: [] as string[],
+      methodToCompare: null as BrewingMethod | null, // First method selected for comparison
+      comparingWith: null as BrewingMethod | null,   // Second method being compared
+      isSelectingComparison: false  // Whether we're in the process of selecting a second method
     }
   },
 
@@ -78,7 +81,13 @@ export default defineComponent({
     },
 
     openMethod(method: BrewingMethod): void {
-      this.selectedMethod = method
+      if (this.isSelectingComparison) {
+        if (method.id !== this.methodToCompare?.id) {
+          this.comparingWith = method
+        }
+      } else {
+        this.selectedMethod = method
+      }
     },
 
     closeMethod(): void {
@@ -88,6 +97,24 @@ export default defineComponent({
     clearFilters(): void {
       this.selectedCategories = []
       this.selectedDifficulties = []
+    },
+
+    startComparison(method: BrewingMethod): void {
+      this.methodToCompare = method
+      this.selectedMethod = null
+      this.isSelectingComparison = true
+    },
+
+    cancelComparison(): void {
+      this.methodToCompare = null
+      this.comparingWith = null
+      this.isSelectingComparison = false
+    },
+
+    closeComparison(): void {
+      this.methodToCompare = null
+      this.comparingWith = null
+      this.isSelectingComparison = false
     }
   }
 })
@@ -144,7 +171,11 @@ export default defineComponent({
         </div>
 
         <div class="filter-footer">
-          Showing {{ filteredMethods.length }} of {{ brewingMethods.length }} methods
+          <span>Showing {{ filteredMethods.length }} of {{ brewingMethods.length }} methods</span>
+          <span v-if="isSelectingComparison" class="comparison-status">
+            Select a method to compare with {{ methodToCompare?.name }}
+            <button class="cancel-btn" @click="cancelComparison">Cancel</button>
+          </span>
         </div>
       </div>
 
@@ -154,6 +185,10 @@ export default defineComponent({
             v-for="method in filteredMethods"
             :key="method.id"
             class="blog-card"
+            :class="{
+              'comparison-selected': method.id === methodToCompare?.id,
+              'comparison-highlight': isSelectingComparison && method.id !== methodToCompare?.id
+            }"
             @click="openMethod(method)"
           >
             <div class="blog-content">
@@ -170,148 +205,92 @@ export default defineComponent({
           </article>
         </div>
       </section>
-    </main>
 
-    <Transition name="overlay">
-      <div v-if="selectedMethod" class="overlay" @click.self="closeMethod">
-        <article class="article-modal">
-          <button class="close-button" @click="closeMethod">×</button>
-          <div class="article-content">
-            <div class="article-meta">
-              <span class="category">{{ selectedMethod.category }}</span>
-              <span class="read-time">{{ selectedMethod.time }}</span>
+      <!-- Single Method Modal -->
+      <Transition name="overlay">
+        <div v-if="selectedMethod" class="overlay" @click.self="closeMethod">
+          <article class="article-modal">
+            <button class="close-button" @click="closeMethod">×</button>
+            <div class="article-actions">
+              <button class="compare-btn" @click="startComparison(selectedMethod)">
+                Compare with another method
+              </button>
             </div>
-            <h1>{{ selectedMethod.name }}</h1>
-            <p class="description">{{ selectedMethod.description }}</p>
-
-            <div class="method-details">
-              <div class="requirements-section">
-                <h3>What You'll Need</h3>
-                <ul class="requirements-list">
-                  <li v-for="(req, index) in selectedMethod.requirements" :key="index">
-                    {{ req }}
-                  </li>
-                </ul>
+            <div class="article-content">
+              <div class="article-meta">
+                <span class="category">{{ selectedMethod.category }}</span>
+                <span class="read-time">{{ selectedMethod.time }}</span>
               </div>
+              <h1>{{ selectedMethod.name }}</h1>
+              <p class="description">{{ selectedMethod.description }}</p>
 
-              <div class="steps-section">
-                <h3>Brewing Steps</h3>
-                <ol class="steps-list">
-                  <li v-for="(step, index) in selectedMethod.steps" :key="index">
-                    {{ step }}
-                  </li>
-                </ol>
+              <div class="method-details">
+                <div class="requirements-section">
+                  <h3>What You'll Need</h3>
+                  <ul class="requirements-list">
+                    <li v-for="(req, index) in selectedMethod.requirements" :key="index">
+                      {{ req }}
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="steps-section">
+                  <h3>Brewing Steps</h3>
+                  <ol class="steps-list">
+                    <li v-for="(step, index) in selectedMethod.steps" :key="index">
+                      {{ step }}
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </Transition>
+
+      <!-- Comparison Modal -->
+      <Transition name="overlay">
+        <div v-if="methodToCompare && comparingWith" class="overlay" @click.self="closeComparison">
+          <div class="comparison-modal">
+            <button class="close-button" @click="closeComparison">×</button>
+            <div class="comparison-content">
+              <div class="comparison-grid">
+                <div v-for="method in [methodToCompare, comparingWith]" :key="method.id" class="comparison-column">
+                  <h2>{{ method.name }}</h2>
+
+                  <div class="comparison-section">
+                    <h3>Overview</h3>
+                    <div class="meta-info">
+                      <p><strong>Category:</strong> {{ method.category }}</p>
+                      <p><strong>Difficulty:</strong> {{ method.difficulty }}</p>
+                      <p><strong>Time:</strong> {{ method.time }}</p>
+                    </div>
+                    <p class="description">{{ method.description }}</p>
+                  </div>
+
+                  <div class="comparison-section">
+                    <h3>Requirements</h3>
+                    <ul>
+                      <li v-for="(req, index) in method.requirements" :key="index">
+                        {{ req }}
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="comparison-section">
+                    <h3>Steps</h3>
+                    <ol>
+                      <li v-for="(step, index) in method.steps" :key="index">
+                        {{ step }}
+                      </li>
+                    </ol>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </article>
-      </div>
-    </Transition>
+        </div>
+      </Transition>
+    </main>
   </div>
 </template>
-
-<style scoped>
-.filter-window {
-  background: white;
-  border-radius: 12px;
-  box-shadow: var(--shadow-md);
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.filter-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.filter-header h3 {
-  color: var(--coffee-dark);
-  font-size: 1.2rem;
-  margin: 0;
-}
-
-.filter-section {
-  margin-bottom: 1.5rem;
-}
-
-.filter-section h4 {
-  color: var(--coffee-dark);
-  font-size: 1rem;
-  margin-bottom: 0.75rem;
-}
-
-.filter-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.filter-btn {
-  background: none;
-  border: 2px solid var(--coffee-light);
-  color: var(--coffee-dark);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-}
-
-.filter-btn:hover {
-  border-color: var(--coffee-medium);
-}
-
-.filter-btn.active {
-  background: var(--coffee-light);
-  color: white;
-  border-color: var(--coffee-light);
-}
-
-.clear-btn {
-  background: none;
-  border: 1px solid var(--coffee-medium);
-  color: var(--coffee-medium);
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 0.9rem;
-}
-
-.clear-btn:hover {
-  background: var(--coffee-medium);
-  color: white;
-}
-
-.filter-footer {
-  color: var(--coffee-medium);
-  font-size: 0.9rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-@media (max-width: 768px) {
-  .filter-window {
-    padding: 1rem;
-  }
-
-  .filter-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .filter-btn {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
-  }
-
-  .filter-section {
-    margin-bottom: 1rem;
-  }
-}
-</style>
