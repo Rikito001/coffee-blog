@@ -171,6 +171,7 @@ export default defineComponent({
   align-items: start;
 }
 
+/* Options and Controls */
 .options {
   display: flex;
   flex-direction: column;
@@ -203,14 +204,18 @@ export default defineComponent({
   background: rgba(255, 255, 255, 0.8);
 }
 
+/* Coffee Display */
 .coffee-display {
+  position: sticky;
+  top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
-  padding-top: 1rem;
-  position: sticky;
-  top: 2rem;
+  padding: 1rem;
+  z-index: 20;
+  background-color: var(--main-bg-color);
+  border-radius: 12px;
+  margin: 0 auto;
 }
 
 .coffee-name {
@@ -220,16 +225,21 @@ export default defineComponent({
   margin-bottom: 2rem;
 }
 
-.warning {
-  color: #e74c3c;
-  font-weight: bold;
-  margin-top: 1rem;
+/* Cup Container */
+.cup-container {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
 }
 
+/* Cup and Plate Styles */
 .cup {
-  width: var(--cup-width);
-  height: var(--cup-height);
-  border-radius: 0 0 10vw 10vw;
+  width: 300px;
+  height: 240px;
+  border-radius: 0 0 50px 50px;
   position: relative;
   background-color: var(--cup-color);
   z-index: 10;
@@ -240,38 +250,36 @@ export default defineComponent({
   content: "";
   position: absolute;
   top: 10%;
-  left: calc(100% - 1vw);
-  width: var(--cup-handle-width);
-  height: var(--cup-handle-height);
-  border: var(--main-border);
+  right: -70px;
+  width: 60px;
+  height: 120px;
+  border: 8px solid var(--cup-color);
   border-radius: 50% 30%;
 }
 
 .plate {
   position: absolute;
-  top: calc(100% + 1vw);
-  left: calc((var(--cup-width) - var(--plate-width)) / 2);
-  width: var(--plate-width);
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
   background: var(--cup-color);
-  height: var(--plate-height);
-  border-radius: 1vw;
+  height: 20px;
+  border-radius: 8px;
 }
 
 .filling {
   position: absolute;
-  left: calc(var(--cup-border-width) / 2);
-  bottom: 1vw;
-  width: var(--cup-inside-width);
-  height: var(--cup-inside-height);
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  top: 8px;
   overflow: hidden;
-  border-radius: 0 0 10vw 10vw;
+  border-radius: 0 0 45px 45px;
   background-color: var(--main-bg-color);
 }
 
-.filling.overflow {
-  background-color: rgba(231, 76, 60, 0.1);
-}
-
+/* Ingredient Layers */
 .filling div {
   position: absolute;
   width: 100%;
@@ -281,31 +289,16 @@ export default defineComponent({
   box-sizing: border-box;
 }
 
-div.chocolate {
-  background: var(--chocolate-color);
-}
-div.coffee {
-  background: var(--coffee-color);
-}
-div.liquor {
-  background: var(--liquor-color);
-}
-div.milk {
-  background: var(--milk-color);
-}
-div.milk_foam {
-  background: var(--milk_foam-color);
-}
-div.steamed_milk {
-  background: var(--steamed_milk-color);
-}
-div.water {
-  background: var(--water-color);
-}
-div.whipped_cream {
-  background: var(--whipped_cream-color);
-}
+div.chocolate { background: var(--chocolate-color); }
+div.coffee { background: var(--coffee-color); }
+div.liquor { background: var(--liquor-color); }
+div.milk { background: var(--milk-color); }
+div.milk_foam { background: var(--milk_foam-color); }
+div.steamed_milk { background: var(--steamed_milk-color); }
+div.water { background: var(--water-color); }
+div.whipped_cream { background: var(--whipped_cream-color); }
 
+/* Custom Controls Section */
 .custom-controls {
   background: rgba(255, 255, 255, 0.9);
   padding: 1.5rem;
@@ -329,6 +322,7 @@ div.whipped_cream {
   padding-right: 0.5rem;
 }
 
+/* Ingredient Controls */
 .ingredient-control {
   margin-bottom: 1rem;
   display: grid;
@@ -363,6 +357,7 @@ div.whipped_cream {
   flex-shrink: 0;
 }
 
+/* Range Input Styling */
 input[type="range"] {
   width: 100%;
   min-width: 0;
@@ -419,11 +414,49 @@ input[type="range"]:hover {
   font-weight: bold;
 }
 
+/* Responsive Styles */
+@media (min-width: 1024px) {
+  .coffee-display {
+    padding: 2rem;
+  }
+
+  .cup {
+    width: 400px;
+    height: 320px;
+  }
+
+  .cup::after {
+    width: 80px;
+    height: 160px;
+    right: -90px;
+    border-width: 10px;
+  }
+
+  .plate {
+    width: 330px;
+    height: 25px;
+  }
+
+  .filling {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    top: 10px;
+  }
+}
+
 @media (max-width: 1024px) {
   .builder-container {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 2rem;
+  }
+
+  .coffee-display {
+    position: sticky;
+    top: 0;
+    order: -1;
+    width: 100%;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   .options {
@@ -444,9 +477,37 @@ input[type="range"]:hover {
     padding: 1rem;
   }
 
+  .coffee-display {
+    padding: 1rem;
+  }
+
+  .coffee-name {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
   .cup {
-    width: 60vw;
-    height: 48vw;
+    width: 250px;
+    height: 200px;
+  }
+
+  .cup::after {
+    width: 50px;
+    height: 100px;
+    right: -55px;
+    border-width: 6px;
+  }
+
+  .plate {
+    width: 210px;
+    height: 18px;
+  }
+
+  .filling {
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    top: 6px;
   }
 
   .ingredient-control {
@@ -455,18 +516,42 @@ input[type="range"]:hover {
 }
 
 @media (max-width: 480px) {
-  .options button {
-    font-size: 0.9rem;
-    padding: 0.25rem;
+  .coffee-display {
+    padding: 0.75rem;
+  }
+
+  .coffee-name {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
   }
 
   .cup {
-    width: 80vw;
-    height: 64vw;
+    width: 200px;
+    height: 160px;
   }
 
-  .custom-controls {
-    padding: 1rem;
+  .cup::after {
+    width: 40px;
+    height: 80px;
+    right: -45px;
+    border-width: 5px;
+  }
+
+  .plate {
+    width: 170px;
+    height: 15px;
+  }
+
+  .filling {
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    top: 5px;
+  }
+
+  .options button {
+    font-size: 0.9rem;
+    padding: 0.25rem;
   }
 
   .ingredient-control {
@@ -478,14 +563,13 @@ input[type="range"]:hover {
     font-size: 0.8rem;
   }
 
-  .coffee-name {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
   .percentage {
     font-size: 0.8rem;
     min-width: 40px;
+  }
+
+  .custom-controls {
+    padding: 1rem;
   }
 }
 </style>

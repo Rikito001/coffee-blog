@@ -1,6 +1,9 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import brewingData from '@/data/brewing-data.json'
+import BrewingMethodCard from '@/components/BrewingMethodCard.vue'
+import SingleMethodModal from '@/components/SingleMethodModal.vue'
+import ComparisonModal from '@/components/ComparisonModal.vue'
 
 interface BrewingMethod {
   id: number;
@@ -16,15 +19,21 @@ interface BrewingMethod {
 export default defineComponent({
   name: "BrewingGuide",
 
+  components: {
+    BrewingMethodCard,
+    SingleMethodModal,
+    ComparisonModal
+  },
+
   data() {
     return {
       selectedMethod: null as BrewingMethod | null,
       brewingMethods: brewingData.brewingMethods as BrewingMethod[],
       selectedCategories: [] as string[],
       selectedDifficulties: [] as string[],
-      methodToCompare: null as BrewingMethod | null, // First method selected for comparison
-      comparingWith: null as BrewingMethod | null,   // Second method being compared
-      isSelectingComparison: false  // Whether we're in the process of selecting a second method
+      methodToCompare: null as BrewingMethod | null,
+      comparingWith: null as BrewingMethod | null,
+      isSelectingComparison: false
     }
   },
 
@@ -181,116 +190,30 @@ export default defineComponent({
 
       <section class="brewing-methods">
         <div class="blog-grid">
-          <article
+          <BrewingMethodCard
             v-for="method in filteredMethods"
             :key="method.id"
-            class="blog-card"
-            :class="{
-              'comparison-selected': method.id === methodToCompare?.id,
-              'comparison-highlight': isSelectingComparison && method.id !== methodToCompare?.id
-            }"
-            @click="openMethod(method)"
-          >
-            <div class="blog-content">
-              <div class="blog-meta">
-                <span class="category">{{ method.category }}</span>
-                <span class="read-time">{{ method.time }}</span>
-              </div>
-              <h2>{{ method.name }}</h2>
-              <p class="excerpt">{{ method.description }}</p>
-              <div class="method-badges">
-                <span class="difficulty">Difficulty: {{ method.difficulty }}</span>
-              </div>
-            </div>
-          </article>
+            :method="method"
+            :is-comparison-selected="method.id === methodToCompare?.id"
+            :is-comparison-highlight="isSelectingComparison && method.id !== methodToCompare?.id"
+            @click="openMethod"
+          />
         </div>
       </section>
 
       <!-- Single Method Modal -->
-      <Transition name="overlay">
-        <div v-if="selectedMethod" class="overlay" @click.self="closeMethod">
-          <article class="article-modal">
-            <button class="close-button" @click="closeMethod">×</button>
-            <div class="article-actions">
-              <button class="compare-btn" @click="startComparison(selectedMethod)">
-                Compare with another method
-              </button>
-            </div>
-            <div class="article-content">
-              <div class="article-meta">
-                <span class="category">{{ selectedMethod.category }}</span>
-                <span class="read-time">{{ selectedMethod.time }}</span>
-              </div>
-              <h1>{{ selectedMethod.name }}</h1>
-              <p class="description">{{ selectedMethod.description }}</p>
-
-              <div class="method-details">
-                <div class="requirements-section">
-                  <h3>What You'll Need</h3>
-                  <ul class="requirements-list">
-                    <li v-for="(req, index) in selectedMethod.requirements" :key="index">
-                      {{ req }}
-                    </li>
-                  </ul>
-                </div>
-
-                <div class="steps-section">
-                  <h3>Brewing Steps</h3>
-                  <ol class="steps-list">
-                    <li v-for="(step, index) in selectedMethod.steps" :key="index">
-                      {{ step }}
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </Transition>
+      <SingleMethodModal
+        v-if="selectedMethod"
+        :method="selectedMethod"
+        @close="closeMethod"
+        @compare="startComparison"/>
 
       <!-- Comparison Modal -->
-      <Transition name="overlay">
-        <div v-if="methodToCompare && comparingWith" class="overlay" @click.self="closeComparison">
-          <div class="comparison-modal">
-            <button class="close-button" @click="closeComparison">×</button>
-            <div class="comparison-content">
-              <div class="comparison-grid">
-                <div v-for="method in [methodToCompare, comparingWith]" :key="method.id" class="comparison-column">
-                  <h2>{{ method.name }}</h2>
-
-                  <div class="comparison-section">
-                    <h3>Overview</h3>
-                    <div class="meta-info">
-                      <p><strong>Category:</strong> {{ method.category }}</p>
-                      <p><strong>Difficulty:</strong> {{ method.difficulty }}</p>
-                      <p><strong>Time:</strong> {{ method.time }}</p>
-                    </div>
-                    <p class="description">{{ method.description }}</p>
-                  </div>
-
-                  <div class="comparison-section">
-                    <h3>Requirements</h3>
-                    <ul>
-                      <li v-for="(req, index) in method.requirements" :key="index">
-                        {{ req }}
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div class="comparison-section">
-                    <h3>Steps</h3>
-                    <ol>
-                      <li v-for="(step, index) in method.steps" :key="index">
-                        {{ step }}
-                      </li>
-                    </ol>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Transition>
+      <ComparisonModal
+        v-if="methodToCompare && comparingWith"
+        :method-one="methodToCompare"
+        :method-two="comparingWith"
+        @close="closeComparison"/>
     </main>
   </div>
 </template>

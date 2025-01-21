@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import blogData from '@/data/blog-data.json'
+import BlogCard from '@/components/BlogCard.vue'
 
 interface BlogPost {
   id: number;
@@ -15,6 +16,10 @@ interface BlogPost {
 
 export default defineComponent({
   name: "CoffeeBlog",
+
+  components: {
+    BlogCard
+  },
 
   data() {
     return {
@@ -141,25 +146,12 @@ export default defineComponent({
       </div>
 
       <section class="blog-grid">
-        <article
+        <BlogCard
           v-for="post in filteredPosts"
           :key="post.id"
-          class="blog-card"
+          :post="post"
           @click="openPost(post)"
-        >
-          <div class="blog-content">
-            <div class="blog-meta">
-              <span class="category">{{ post.category }}</span>
-              <span class="read-time">{{ post.readTime }}</span>
-            </div>
-            <h2>{{ post.title }}</h2>
-            <p class="excerpt">{{ post.excerpt }}</p>
-            <div class="post-info">
-              <span class="author">By {{ post.author }}</span>
-              <span class="date">{{ post.date }}</span>
-            </div>
-          </div>
-        </article>
+        />
       </section>
     </main>
 

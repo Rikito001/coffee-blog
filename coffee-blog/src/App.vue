@@ -1,14 +1,18 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import NavBar from './components/NavBar.vue'
-import Footer from './components/Footer.vue'
+<script lang="ts">
+import AppNavBar from '@/components/AppNavBar.vue'
 import './assets/main.css'
+import AppFooter from "@/components/AppFooter.vue";
+
+export default {
+  components: {AppFooter, AppNavBar}
+}
+
 </script>
 
 <template>
   <div class="app">
-    <NavBar />
+    <AppNavBar/>
     <RouterView />
-    <Footer />
+    <AppFooter/>
   </div>
 </template>

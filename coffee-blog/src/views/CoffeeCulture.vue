@@ -1,6 +1,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import cultureData from '@/data/culture-data.json'
+import TraditionCard from '@/components/TraditionCard.vue'
+import TraditionModal from '@/components/TraditionModal.vue'
 
 interface CoffeeTradition {
   id: number;
@@ -13,6 +15,11 @@ interface CoffeeTradition {
 
 export default defineComponent({
   name: "CoffeeCulture",
+
+  components: {
+    TraditionCard,
+    TraditionModal
+  },
 
   data() {
     return {
@@ -36,49 +43,26 @@ export default defineComponent({
   <div class="culture">
     <header class="culture-header">
       <div class="container">
-        <h1>Coffee Cultures Around the World</h1>
+        <h1>Coffee Cultures of the World</h1>
         <p class="subtitle">Exploring coffee traditions and rituals across different cultures</p>
       </div>
     </header>
 
     <main class="container">
       <section class="traditions-grid">
-        <article
+        <TraditionCard
           v-for="tradition in traditions"
           :key="tradition.id"
-          class="tradition-card"
-          @click="openTradition(tradition)"
-        >
-          <div class="tradition-content">
-            <span class="region-tag">{{ tradition.region }}</span>
-            <h2>{{ tradition.title }}</h2>
-            <p class="tradition-desc">{{ tradition.shortDesc }}</p>
-          </div>
-        </article>
+          :tradition="tradition"
+          @open-tradition="openTradition"
+        />
       </section>
     </main>
 
-    <Transition name="overlay">
-      <div v-if="selectedTradition" class="overlay" @click.self="closeTradition">
-        <article class="tradition-modal">
-          <button class="close-button" @click="closeTradition">×</button>
-          <div class="tradition-modal-content">
-            <span class="region-tag">{{ selectedTradition.region }}</span>
-            <h1>{{ selectedTradition.title }}</h1>
-            <div class="tradition-body">
-              {{ selectedTradition.fullContent }}
-            </div>
-            <div class="traditions-list">
-              <h3>Key Traditions</h3>
-              <ul>
-                <li v-for="(item, index) in selectedTradition.traditions" :key="index">
-                  {{ item }}
-                </li>
-              </ul>
-            </div>
-          </div>
-        </article>
-      </div>
-    </Transition>
+    <TraditionModal
+      v-if="selectedTradition"
+      :tradition="selectedTradition"
+      @close="closeTradition"
+    />
   </div>
 </template>
