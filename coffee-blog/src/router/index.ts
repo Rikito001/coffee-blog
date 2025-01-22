@@ -3,7 +3,8 @@ import Home from '../views/Home.vue'
 import BrewingGuide from '../views/BrewingGuide.vue'
 import CoffeeBlog from '../views/CoffeeBlog.vue'
 import CoffeeCulture from '../views/CoffeeCulture.vue'
-import CoffeeBuilder from "@/views/CoffeeBuilder.vue";
+import CoffeeBuilder from "@/views/CoffeeBuilder.vue"
+import NotFound from '@/views/NotFound.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/build',
       name: 'build',
       component: CoffeeBuilder
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'not-found',
+      component: NotFound
     }
   ],
   scrollBehavior(to, from, savedPosition) {

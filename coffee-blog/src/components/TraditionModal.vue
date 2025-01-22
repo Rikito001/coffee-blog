@@ -27,17 +27,19 @@ export default defineComponent({
 <template>
   <Transition name="overlay">
     <div class="overlay" @click.self="$emit('close')">
-      <article class="tradition-modal">
+      <article class="article-modal">
         <button class="close-button" @click="$emit('close')">×</button>
-        <div class="tradition-modal-content">
-          <span class="region-tag">{{ tradition.region }}</span>
+        <div class="article-content">
+          <div class="article-meta">
+            <span class="category">{{ tradition.region }}</span>
+          </div>
           <h1>{{ tradition.title }}</h1>
-          <div class="tradition-body">
+          <div class="article-body">
             {{ tradition.fullContent }}
           </div>
-          <div class="traditions-list">
+          <div class="traditions-section">
             <h3>Key Traditions</h3>
-            <ul>
+            <ul class="traditions-list">
               <li v-for="(item, index) in tradition.traditions" :key="index">
                 {{ item }}
               </li>

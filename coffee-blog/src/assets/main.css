@@ -350,6 +350,35 @@ body {
   background: var(--coffee-medium);
 }
 
+.traditions-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--coffee-light);
+}
+
+.traditions-section h3 {
+  color: var(--coffee-dark);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.traditions-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.traditions-list li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--coffee-light);
+  color: var(--coffee-dark);
+  line-height: 1.6;
+}
+
+.traditions-list li:last-child {
+  border-bottom: none;
+}
+
 /* Auth Components */
 .auth-modal {
   background: white;
@@ -864,5 +893,52 @@ body {
     flex-direction: column;
     gap: 0.5rem;
     align-items: flex-start;
+  }
+}
+
+/* 404 Error Page Styles */
+.error-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50vh;
+  text-align: center;
+}
+
+.error-message {
+  max-width: 600px;
+  padding: 2rem;
+}
+
+.error-message p {
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  color: var(--coffee-dark);
+}
+
+.back-button {
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  background-color: var(--coffee-dark);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: var(--coffee-dark);
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .error-message p {
+    font-size: 1rem;
+  }
+
+  .back-button {
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
   }
 }
